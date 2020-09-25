@@ -12,12 +12,53 @@
 
             function requisitarPagina(url){
 
+
+				document.getElementById('conteudo').innerHTML = '';
+				
+				//incluir o gif de loading na página
+				if(!document.getElementById('loading')){
+
+					let imgLoading = document.createElement('img');
+					imgLoading.id ='loading';
+					imgLoading.src ='loading.gif';
+					imgLoading.className = 'rounded mx-auto d-block';
+
+					document.getElementById('conteudo').appendChild(imgLoading);
+				}
+
+				
+
                 let ajax = new XMLHttpRequest(); /*requisição da url via ajax*/
 
-                ajax.open('GET',url);
-                ajax.send()
+				//requisição não iniciada, STATE = 0
+				//console.log(ajax.readyState);
 
-                console.log(ajax);
+				ajax.open('GET',url);
+
+				//conexão estabelecida com o servidor, STATE = 1
+                
+				//console.log(ajax.readyState);
+
+				//lógica que aguarda o progresso da requisição, usando o método 
+				ajax.onreadystatechange = ()=>{
+					
+					if(ajax.readyState == 4 && ajax.status == 200){
+
+						document.getElementById('conteudo').innerHTML = 'requisição finalizada com sucesso! Status :', ajax.status; 
+						//document.getElementById('loading').remove();
+					}
+
+					if(ajax.readyState == 4 && ajax.status == 404){
+
+						document.getElementById('conteudo').innerHTML ='O recurso solicitado não foi encontrado! Status :', ajax.status;
+						//document.getElementById('loading').remove();
+					}
+					
+					//console.log(ajax.readyState);
+				}
+                
+				ajax.send();
+                //console.log(ajax)
 
 
             }
@@ -44,9 +85,9 @@
 	    	<div class="row mb-2">
 	    		<div class="col-md-4 center"></div>
 	    		<div class="col-md-4 center">
-	    			<a href="#" onclick="requisitarPagina('pagina_1_conteudo.html')" class="btn btn-primary">Página 1</a>
-	    			<a href="#" onclick="requisitarPagina('pagina_2_conteudo.html')" class="btn btn-primary">Página 2</a>
-	    			<a href="#" onclick="requisitarPagina('pagina_3_conteudo.html')" class="btn btn-primary">Página 3</a>
+	    			<a href="#" class="btn btn-primary" onclick="requisitarPagina('pagina_1_conteudo.php');">Página 1</a>
+	    			<a href="#" class="btn btn-primary" onclick="requisitarPagina('pagina_2_conteudo.html');">Página 2</a>
+	    			<a href="#" class="btn btn-primary" onclick="requisitarPagina('pagina_3_conteudo.html')">Página 3</a>
 	    		</div>
 	    		<div class="col-md-4 center"></div>
 	    	</div>
@@ -54,9 +95,7 @@
 	    	<div class="row">
 		    	<div class="col-md-1"></div>
 
-		    	<div class="col-md-10">
-		    		
-		    	</div>
+		    	<div class="col-md-10" id="conteudo"></div>
 		    		
 				<div class="col-md-1"></div>
 			</div>
