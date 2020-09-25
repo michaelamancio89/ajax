@@ -28,8 +28,8 @@
 
 				
 
-                let ajax = new XMLHttpRequest(); /*requisição da url via ajax*/
-
+				let ajax = new XMLHttpRequest(); /*requisição da url via ajax*/
+				
 				//requisição não iniciada, STATE = 0
 				//console.log(ajax.readyState);
 
@@ -44,13 +44,13 @@
 					
 					if(ajax.readyState == 4 && ajax.status == 200){
 
-						document.getElementById('conteudo').innerHTML = 'requisição finalizada com sucesso! Status :', ajax.status; 
+						document.getElementById('conteudo').innerHTML = ajax.responseText; 
 						//document.getElementById('loading').remove();
 					}
 
 					if(ajax.readyState == 4 && ajax.status == 404){
 
-						document.getElementById('conteudo').innerHTML ='O recurso solicitado não foi encontrado! Status :', ajax.status;
+						document.getElementById('conteudo').innerHTML = 'O recurso solicitado não foi encontrado! Status :', ajax.status;
 						//document.getElementById('loading').remove();
 					}
 					
